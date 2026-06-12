@@ -8,8 +8,9 @@ import lombok.Data;
 @Data
 @Builder
 public class UserUpdateDto {
-    @NotBlank
+    @NotBlank(message = "Имя не может быть пустым")
     private String name;
-    @Email
+    @Email(message = "Некорректный формат email")
+    @NotBlank(message = "Email не может быть пустым")
     private String email;
 }

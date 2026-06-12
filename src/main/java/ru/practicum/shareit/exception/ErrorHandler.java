@@ -1,6 +1,6 @@
 package ru.practicum.shareit.exception;
 
-import org.apache.coyote.BadRequestException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
@@ -8,49 +8,59 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestControllerAdvice
 public class ErrorHandler {
-
-    @ExceptionHandler
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleValidation(MethodArgumentNotValidException e) {
+    public Map<String, Object> handleValidation(MethodArgumentNotValidException e, HttpServletRequest request) {
+        Map<String, Object> response = new HashMap<>();
+
         String message = e.getBindingResult().getFieldErrors().stream()
                 .map(fe -> fe.getField() + ": " + fe.getDefaultMessage())
                 .reduce((a, b) -> a + "; " + b)
                 .orElse(e.getMessage());
-        return new ErrorResponse(message);
+
+        response.put("error", message);
+
+        response.put("id", null);
+        response.put("name", null);
+        response.put("email", null);
+
+        return response;
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(MissingRequestHeaderException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleMissingHeader(MissingRequestHeaderException e) {
-        return new ErrorResponse("Отсутствует заголовок: " + e.getHeaderName());
+    public Map<String, String> handleMissingHeader(MissingRequestHeaderException e) {
+        Map<String, String> response = new HashMap<>();
+        response.put("error", "Отсутствует заголовок: " + e.getHeaderName());
+        return response;
     }
 
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleBadRequest(BadRequestException e) {
-        return new ErrorResponse(e.getMessage());
-    }
-
-    @ExceptionHandler
+    @ExceptionHandler({NotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleNotFound(NotFoundException e) {
-        return new ErrorResponse(e.getMessage());
+    public Map<String, String> handleNotFound(NotFoundException e) {
+        Map<String, String> response = new HashMap<>();
+        response.put("error", e.getMessage());
+        return response;
     }
 
-    @ExceptionHandler
+    @ExceptionHandler({ConflictException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handleConflict(ConflictException e) {
-        return new ErrorResponse(e.getMessage());
+    public Map<String, String> handleConflict(ConflictException e) {
+        Map<String, String> response = new HashMap<>();
+        response.put("error", e.getMessage());
+        return response;
     }
 
-    @ExceptionHandler
+    @ExceptionHandler({ForbiddenException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ErrorResponse handleForbidden(ForbiddenException e) {
-        return new ErrorResponse(e.getMessage());
-    }
-
-    public record ErrorResponse(String error) {
+    public Map<String, String> handleForbidden(ForbiddenException e) {
+        Map<String, String> response = new HashMap<>();
+        response.put("error", e.getMessage());
+        return response;
     }
 }
