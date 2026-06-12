@@ -35,30 +35,19 @@ public class UserServiceImpl implements UserService {
     public UserDto getUserById(long id) {
         Optional<User> user = userStorage.getUserById(id);
         if (user.isEmpty()) {
-            throw new NotFoundException("User not found");
+            throw new NotFoundException("Пользователь не найден");
         }
         return toUserDto(user.get());
     }
 
     @Override
-    public UserDto updateUser(long id, UserUpdateDto dto) {
-        Optional<User> optionalUser = userStorage.getUserById(id);
-        if (optionalUser.isEmpty()) {
+    public UserDto updateUser(long id, UserUpdateDto userUpdateDto) {
+        Optional<User> user = userStorage.getUserById(id);
+        if (user.isEmpty()) {
             throw new NotFoundException("User not found");
         }
-
-        User existingUser = optionalUser.get();
-
-        if (dto.getName() != null) {
-            existingUser.setName(dto.getName());
-        }
-        if (dto.getEmail() != null) {
-            existingUser.setEmail(dto.getEmail());
-        }
-
-        User updated = userStorage.update(id, existingUser);
-
-        return UserMapper.toUserDto(updated);
+        User userUpdated = userStorage.update(id, toUser(userUpdateDto));
+        return toUserDto(userUpdated);
     }
 
     @Override
