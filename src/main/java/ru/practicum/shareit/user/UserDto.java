@@ -12,7 +12,6 @@ public class UserDto {
 
     @NotBlank(message = "Имя пользователя не может быть пустым")
     private String name;
-    
     @Email(message = "Некорректный формат email")
     private String email;
 }
