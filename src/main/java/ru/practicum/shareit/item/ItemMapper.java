@@ -1,32 +1,38 @@
 package ru.practicum.shareit.item;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-
-@Component
-@RequiredArgsConstructor
 public class ItemMapper {
-    public ItemDto toDto(Item item) {
-        if (item == null) {
-            return null;
-        }
+
+    public static ItemDto toItemDto(Item item) {
         return ItemDto.builder()
                 .id(item.getId())
                 .name(item.getName())
                 .description(item.getDescription())
                 .available(item.getAvailable())
-                .rentalCount(0)
+                .request(item.getRequest() != null ? item.getRequest().getId() : null)
                 .build();
     }
 
-    public Item toModel(ItemDto dto) {
-        if (dto == null) {
-            return null;
-        }
-        Item item = new Item();
-        item.setName(dto.getName());
-        item.setDescription(dto.getDescription());
-        item.setAvailable(dto.getAvailable());
-        return item;
+    public static ItemUpdateDto toItemUpdateDto(Item item) {
+        return ItemUpdateDto.builder()
+                .name(item.getName())
+                .description(item.getDescription())
+                .available(item.getAvailable())
+                .build();
+    }
+
+    public static Item toItem(ItemDto itemDto) {
+        return Item.builder()
+                .name(itemDto.getName())
+                .description(itemDto.getDescription())
+                .available(itemDto.getAvailable())
+                .build();
+    }
+
+    public static Item toItem(ItemUpdateDto itemUpdateDto) {
+        return Item.builder()
+                .name(itemUpdateDto.getName())
+                .description(itemUpdateDto.getDescription())
+                .available(itemUpdateDto.getAvailable())
+                .build();
     }
 }

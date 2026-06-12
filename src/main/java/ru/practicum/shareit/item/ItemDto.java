@@ -1,14 +1,10 @@
 package ru.practicum.shareit.item;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class ItemDto {
     private Long id;
@@ -21,5 +17,5 @@ public class ItemDto {
 
     private Boolean available;
 
-    private Integer rentalCount;
+    private Long request;
 }
