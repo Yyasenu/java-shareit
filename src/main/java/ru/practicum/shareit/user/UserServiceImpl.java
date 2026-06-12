@@ -16,8 +16,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserStorage userStorage;
 
-    private final UserMapper userMapper;
-
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = userStorage.create(toUser(userDto));
@@ -44,7 +42,7 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUser(long id, UserUpdateDto userUpdateDto) {
         Optional<User> user = userStorage.getUserById(id);
         if (user.isEmpty()) {
-            throw new NotFoundException("User not found");
+            throw new NotFoundException("Пользователь не найден");
         }
         User userUpdated = userStorage.update(id, toUser(userUpdateDto));
         return toUserDto(userUpdated);
