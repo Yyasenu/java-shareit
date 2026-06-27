@@ -1,66 +1,70 @@
 package ru.practicum.shareit.exception;
 
-import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @RestControllerAdvice
 public class ErrorHandler {
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+
+    @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, Object> handleValidation(MethodArgumentNotValidException e, HttpServletRequest request) {
-        Map<String, Object> response = new HashMap<>();
+    public ErrorResponse handleValidationException(ValidationException e) {
+        return new ErrorResponse(e.getMessage());
+    }
 
-        String message = e.getBindingResult().getFieldErrors().stream()
-                .map(fe -> fe.getField() + ": " + fe.getDefaultMessage())
-                .reduce((a, b) -> a + "; " + b)
-                .orElse(e.getMessage());
 
-        response.put("error", message);
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleNotFoundException(NotFoundException e) {
+        return new ErrorResponse(e.getMessage());
+    }
 
-        response.put("id", null);
-        response.put("name", null);
-        response.put("email", null);
-
-        return response;
+    @ExceptionHandler(ConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleConflictException(ConflictException e) {
+        return new ErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler(MissingRequestHeaderException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleMissingHeader(MissingRequestHeaderException e) {
-        Map<String, String> response = new HashMap<>();
-        response.put("error", "Отсутствует заголовок: " + e.getHeaderName());
-        return response;
+    public ErrorResponse handleMissingHeader(MissingRequestHeaderException e) {
+        return new ErrorResponse("Отсутствует обязательный заголовок: " + e.getHeaderName());
     }
 
-    @ExceptionHandler({NotFoundException.class})
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map<String, String> handleNotFound(NotFoundException e) {
-        Map<String, String> response = new HashMap<>();
-        response.put("error", e.getMessage());
-        return response;
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
+        return new ErrorResponse("Ошибка валидации: " + e.getBindingResult().getFieldError().getDefaultMessage());
     }
 
-    @ExceptionHandler({ConflictException.class})
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleHttpMessageNotReadableValid(HttpMessageNotReadableException e) {
+        return new ErrorResponse("Ошибка конвертации JSON: " + e.getMessage());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public Map<String, String> handleConflict(ConflictException e) {
-        Map<String, String> response = new HashMap<>();
-        response.put("error", e.getMessage());
-        return response;
+    public ErrorResponse handleIllegalArgumentValid(IllegalArgumentException e) {
+        return new ErrorResponse(e.getMessage());
     }
 
-    @ExceptionHandler({ForbiddenException.class})
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public Map<String, String> handleForbidden(ForbiddenException e) {
-        Map<String, String> response = new HashMap<>();
-        response.put("error", e.getMessage());
-        return response;
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleErrors(final Throwable e) {
+        return new ErrorResponse("Произошла непредвиденная ошибка." + e.getMessage());
+    }
+
+    @Data
+    @AllArgsConstructor
+    class ErrorResponse {
+        private String error;
     }
 }

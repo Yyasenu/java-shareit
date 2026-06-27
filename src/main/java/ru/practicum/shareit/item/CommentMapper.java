@@ -1,9 +1,15 @@
 package ru.practicum.shareit.item;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
+import lombok.experimental.UtilityClass;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-public interface CommentMapper {
-    CommentResponseDto mapToCommentResponseDto(Comment comment);
+@UtilityClass
+public class CommentMapper {
+    public CommentResponseDTO toDTO(Comment comment) {
+        return CommentResponseDTO.builder()
+                .id(comment.getId())
+                .text(comment.getText())
+                .authorName(comment.getAuthor().getName())
+                .created(comment.getCreated())
+                .build();
+    }
 }
