@@ -1,4 +1,4 @@
-package ru.practicum.shareit.user;
+/*package ru.practicum.shareit.user;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -14,3 +14,4 @@ public interface UserStorage {
 
     void deleteUser(long id);
 }
+ */

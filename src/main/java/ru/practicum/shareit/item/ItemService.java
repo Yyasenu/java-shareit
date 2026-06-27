@@ -13,4 +13,6 @@ public interface ItemService {
     ItemUpdateDto update(long id, long userId, ItemUpdateDto itemUpdateDto);
 
     Collection<ItemDto> search(String text, long userId);
+
+    CommentDto addComment(long itemId, long userId, String text);
 }

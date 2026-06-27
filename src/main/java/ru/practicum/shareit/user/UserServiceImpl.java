@@ -3,10 +3,7 @@ package ru.practicum.shareit.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.NotFoundException;
-
 import java.util.Collection;
-import java.util.Optional;
-
 import static ru.practicum.shareit.user.UserMapper.toUser;
 import static ru.practicum.shareit.user.UserMapper.toUserDto;
 
@@ -14,42 +11,49 @@ import static ru.practicum.shareit.user.UserMapper.toUserDto;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserStorage userStorage;
+    private final UserRepository userRepository;
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        User user = userStorage.create(toUser(userDto));
+        User user = userRepository.save(toUser(userDto));
         return toUserDto(user);
     }
 
     @Override
     public Collection<UserDto> getAll() {
-        return userStorage.getAll().stream()
+        return userRepository.findAll().stream()
                 .map(UserMapper::toUserDto)
                 .toList();
     }
 
     @Override
     public UserDto getUserById(long id) {
-        Optional<User> user = userStorage.getUserById(id);
-        if (user.isEmpty()) {
-            throw new NotFoundException("Пользователь не найден");
-        }
-        return toUserDto(user.get());
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        return toUserDto(user);
     }
 
     @Override
     public UserDto updateUser(long id, UserUpdateDto userUpdateDto) {
-        Optional<User> user = userStorage.getUserById(id);
-        if (user.isEmpty()) {
-            throw new NotFoundException("Пользователь не найден");
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+
+        if (userUpdateDto.getName() != null) {
+            user.setName(userUpdateDto.getName());
         }
-        User userUpdated = userStorage.update(id, toUser(userUpdateDto));
-        return toUserDto(userUpdated);
+        if (userUpdateDto.getEmail() != null) {
+            user.setEmail(userUpdateDto.getEmail());
+        }
+
+        User updated = userRepository.save(user);
+        return toUserDto(updated);
     }
 
     @Override
     public void deleteUser(long id) {
-        userStorage.deleteUser(id);
+        if (!userRepository.existsById(id)) {
+            throw new NotFoundException("Пользователь не найден");
+        }
+        userRepository.deleteById(id);
     }
 }

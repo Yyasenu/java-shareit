@@ -1,4 +1,4 @@
-package ru.practicum.shareit.item;
+/*package ru.practicum.shareit.item;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -15,3 +15,4 @@ public interface ItemStorage {
 
     Collection<Item> search(String text);
 }
+ */

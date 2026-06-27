@@ -1,4 +1,4 @@
-package ru.practicum.shareit.user;
+/*package ru.practicum.shareit.user;
 
 import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exception.ConflictException;
@@ -80,3 +80,4 @@ public class InMemoryUserStorage implements UserStorage {
         return nextId++;
     }
 }
+ */

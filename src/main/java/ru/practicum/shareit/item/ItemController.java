@@ -40,4 +40,12 @@ public class ItemController {
     public Collection<ItemDto> search(@RequestParam String text, @RequestHeader("X-Sharer-User-Id") long userId) {
         return itemService.search(text, userId);
     }
+
+    @PostMapping("/{itemId}/comment")
+    public CommentDto addComment(
+            @PathVariable("itemId") long itemId,
+            @RequestHeader("X-Sharer-User-Id") long userId,
+            @RequestBody CommentRequestDto requestDto) {
+        return itemService.addComment(itemId, userId, requestDto.getText());
+    }
 }
