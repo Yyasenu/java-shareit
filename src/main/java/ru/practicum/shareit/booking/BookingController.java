@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.dto.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/bookings")
 @RequiredArgsConstructor
