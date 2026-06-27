@@ -1,4 +1,4 @@
-package ru.practicum.shareit.user;
+/*package ru.practicum.shareit.user;
 
 import jakarta.validation.constraints.Email;
 import lombok.Builder;
@@ -11,3 +11,4 @@ public class UserUpdateDto {
     @Email
     private String email;
 }
+ */

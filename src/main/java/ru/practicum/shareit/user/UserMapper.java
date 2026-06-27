@@ -1,26 +1,11 @@
 package ru.practicum.shareit.user;
 
-public class UserMapper {
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
 
-    public static UserDto toUserDto(User user) {
-        return UserDto.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .email(user.getEmail())
-                .build();
-    }
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface UserMapper {
+    User mapToUser(UserDto userDto);
 
-    public static User toUser(UserDto userDto) {
-        return User.builder()
-                .name(userDto.getName())
-                .email(userDto.getEmail())
-                .build();
-    }
-
-    public static User toUser(UserUpdateDto userUpdateDto) {
-        return User.builder()
-                .name(userUpdateDto.getName())
-                .email(userUpdateDto.getEmail())
-                .build();
-    }
+    UserDto mapToUserDto(User user);
 }

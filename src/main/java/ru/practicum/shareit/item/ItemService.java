@@ -3,16 +3,15 @@ package ru.practicum.shareit.item;
 import java.util.Collection;
 
 public interface ItemService {
+    ItemDto create(long userId, ItemDto itemDto);
 
-    Collection<ItemDto> getAll(long userId);
+    ItemDto update(long userId, long itemId, ItemDto itemDto);
 
-    ItemDto getItemById(long id, long userId);
+    ItemDto getItemById(long itemId);
 
-    ItemDto add(ItemDto itemDto, long userId);
+    Collection<ItemDto> getItemsByOwner(long userId);
 
-    ItemUpdateDto update(long id, long userId, ItemUpdateDto itemUpdateDto);
+    Collection<ItemDto> searchByText(String text);
 
-    Collection<ItemDto> search(String text, long userId);
-
-    CommentDto addComment(long itemId, long userId, String text);
+    Collection<ItemDto> getCommentsByItemId(long userId, long itemId);
 }

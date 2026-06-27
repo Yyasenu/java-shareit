@@ -1,52 +1,14 @@
 package ru.practicum.shareit.item;
 
-public class ItemMapper {
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
-    public static ItemDto toItemDto(Item item) {
-        if (item == null) return null;
-        return ItemDto.builder()
-                .id(item.getId())
-                .name(item.getName())
-                .description(item.getDescription())
-                .available(item.getAvailable())
-                .ownerId(item.getOwner() != null ? item.getOwner().getId() : null)
-                .nextBookingStart(null)
-                .lastBookingEnd(null)
-                .comments(null)
-                .build();
-    }
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface ItemMapper {
+    @Mapping(source = "owner.id", target = "ownerId")
+    ItemDto mapToItemDto(Item item);
 
-    public static ItemUpdateDto toItemUpdateDto(Item item) {
-        return ItemUpdateDto.builder()
-                .name(item.getName())
-                .description(item.getDescription())
-                .available(item.getAvailable())
-                .build();
-    }
-
-    public static Item toItem(ItemDto itemDto) {
-        return Item.builder()
-                .name(itemDto.getName())
-                .description(itemDto.getDescription())
-                .available(itemDto.getAvailable())
-                .build();
-    }
-
-    public static Item toItem(ItemUpdateDto itemUpdateDto) {
-        return Item.builder()
-                .name(itemUpdateDto.getName())
-                .description(itemUpdateDto.getDescription())
-                .available(itemUpdateDto.getAvailable())
-                .build();
-    }
-
-    public static CommentDto toCommentDto(Comment comment) {
-        if (comment == null) return null;
-        return CommentDto.builder()
-                .id(comment.getId())
-                .authorName(comment.getAuthor() != null ? comment.getAuthor().getName() : null)
-                .text(comment.getText())
-                .created(comment.getCreated())
-                .build();
-    }
+    @Mapping(source = "ownerId", target = "owner.id")
+    Item mapToItem(ItemDto dto);
 }

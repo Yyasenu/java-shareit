@@ -2,26 +2,36 @@ package ru.practicum.shareit.item;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
+import ru.practicum.shareit.booking.dto.BookingResponseDto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @Builder
 public class ItemDto {
+
     private Long id;
 
+    private Long ownerId;
+
     @NotBlank(message = "Название вещи не может быть пустым")
+    @Size(max = 100, message = "Название не должно превышать 100 символов")
     private String name;
 
-    @NotBlank(message = "Описание вещи не может быть пустым")
+    @NotBlank(message = "Описание не может быть пустым")
+    @Size(max = 500, message = "Описание не должно превышать 500 символов")
     private String description;
-    @NotNull
+
+    @NotNull(message = "Доступность должна быть указана")
     private Boolean available;
-    private Long ownerId;
-    private LocalDateTime nextBookingStart;
-    private LocalDateTime lastBookingEnd;
-    private List<CommentDto> comments;
+
+    private BookingResponseDto lastBooking;
+    private BookingResponseDto nextBooking;
+
+    private Long requestId;
+
+    private List<CommentResponseDto> comments;
 }

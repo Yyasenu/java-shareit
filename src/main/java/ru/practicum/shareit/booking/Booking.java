@@ -1,5 +1,6 @@
 package ru.practicum.shareit.booking;
 
+import ch.qos.logback.core.status.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,20 +14,20 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "bookings")
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Booking {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "start_date", nullable = false)
-    private LocalDateTime start;
+    @Column(name = "booking_start", nullable = false)
+    private LocalDateTime bookingStart;
 
-    @Column(name = "end_date", nullable = false)
-    private LocalDateTime end;
+    @Column(name = "booking_end", nullable = false)
+    private LocalDateTime bookingEnd;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", nullable = false)
@@ -37,6 +38,6 @@ public class Booking {
     private User booker;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false, length = 20)
-    private BookingStatus status;
+    @Column(nullable = false)
+    private Status status;
 }

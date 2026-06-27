@@ -1,10 +1,13 @@
 package ru.practicum.shareit.booking.dto;
 
 public enum BookingState {
-    ALL,
-    CURRENT,
-    PAST,
-    FUTURE,
-    WAITING,
-    REJECTED
+    ALL("Все"),
+    CURRENT("Текущие"),
+    PAST("Завершенные"),
+    FUTURE("Будущие"),
+    WAITING("Ожидающие подтверждения"),
+    REJECTED("Отклоненные");
+
+    BookingState(String description) {
+    }
 }

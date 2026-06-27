@@ -1,4 +1,4 @@
-package ru.practicum.shareit.item;
+/*package ru.practicum.shareit.item;
 
 import lombok.Builder;
 import lombok.Data;
@@ -11,3 +11,4 @@ public class ItemUpdateDto {
     private String description;
     private Boolean available;
 }
+ */
