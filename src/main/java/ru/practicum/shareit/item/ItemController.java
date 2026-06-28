@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.comment.CommentRequestDTO;
+import ru.practicum.shareit.item.comment.CommentResponseDTO;
 
 import java.util.Collections;
 import java.util.List;
