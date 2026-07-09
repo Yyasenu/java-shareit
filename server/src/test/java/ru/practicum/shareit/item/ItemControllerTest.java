@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.exception.ValidationException;
+import ru.practicum.shareit.item.comment.CommentRequestDTO;
 import ru.practicum.shareit.item.comment.CommentResponseDTO;
 
 import java.time.LocalDateTime;
