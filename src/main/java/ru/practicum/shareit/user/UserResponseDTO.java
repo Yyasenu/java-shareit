@@ -1,13 +1,14 @@
 package ru.practicum.shareit.user;
 
-import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class UserUpdateDto {
+@AllArgsConstructor
+public class UserResponseDTO {
+    private Long id;
     private String name;
-    @Email
     private String email;
 }

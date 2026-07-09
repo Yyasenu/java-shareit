@@ -1,13 +1,12 @@
 package ru.practicum.shareit.item;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
-public class ItemUpdateDto {
-    private Long id;
+public class ItemUpdateDTO {
     private String name;
+
     private String description;
+
     private Boolean available;
 }
