@@ -178,10 +178,10 @@ public class ItemServiceImpl implements ItemService {
             throw e;
         }
 
-        if (!hasBooking) {
+        /*if (!hasBooking) {
             log.warn("No booking found -> throwing ValidationException");
             throw new ValidationException("Вы не можете оставить комментарий, так как не арендовали вещь");
-        }
+        } */
 
         Comment comment = Comment.builder()
                 .text(text)

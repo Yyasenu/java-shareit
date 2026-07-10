@@ -68,5 +68,3 @@ public class ErrorHandler {
         private String error;
     }
 }
-
-
