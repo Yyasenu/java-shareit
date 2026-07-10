@@ -9,6 +9,7 @@ import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.booking.BookingRepository;
 import ru.practicum.shareit.booking.BookingStatus;
 import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.exception.ValidationException;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.request.ItemRequestRepository;
 import ru.practicum.shareit.user.User;
@@ -229,7 +230,7 @@ class ItemServiceImplIntegrationTest {
         assertThat(commentRepository.findById(comment.getId()).isPresent(), is(true));
     }
 
-    /*@Test
+    @Test
     void addComment_withoutBooking_shouldThrow() {
         User owner = userRepository.save(new User(null, "Георгий", "owner@email.com"));
         User nonBooker = userRepository.save(new User(null, "Георгий", "nonbooker@email.com"));
@@ -244,5 +245,5 @@ class ItemServiceImplIntegrationTest {
 
         assertThrows(ValidationException.class,
                 () -> itemService.addComment(nonBooker.getId(), item.getId(), "Не должен добавиться"));
-    } */
+    } 
 }

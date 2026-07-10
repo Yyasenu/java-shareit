@@ -8,6 +8,7 @@ import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.booking.BookingDateDTO;
 import ru.practicum.shareit.booking.BookingRepository;
 import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.exception.ValidationException;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.request.ItemRequestRepository;
 import ru.practicum.shareit.user.User;
@@ -177,10 +178,10 @@ public class ItemServiceImpl implements ItemService {
             throw e;
         }
 
-        /*if (!hasBooking) {
+        if (!hasBooking) {
             log.warn("No booking found -> throwing ValidationException");
             throw new ValidationException("Вы не можете оставить комментарий, так как не арендовали вещь");
-        } */
+        }
 
         Comment comment = Comment.builder()
                 .text(text)
