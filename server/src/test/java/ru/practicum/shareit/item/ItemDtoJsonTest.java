@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.json.JsonContent;
-import ru.practicum.shareit.dto.BookingDateDTO;
-import ru.practicum.shareit.item.comment.CommentRequestDTO;
-import ru.practicum.shareit.item.comment.CommentResponseDTO;
+import ru.practicum.shareit.booking.BookingDateDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;

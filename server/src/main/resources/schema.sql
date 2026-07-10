@@ -46,3 +46,6 @@ CREATE TABLE IF NOT EXISTS requests (
     created TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     CONSTRAINT fk_request_user FOREIGN KEY (requestor_id) REFERENCES users (id) ON DELETE CASCADE
 );
+
+
+

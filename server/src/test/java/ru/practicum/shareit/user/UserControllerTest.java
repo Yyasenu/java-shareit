@@ -161,4 +161,5 @@ class UserControllerTest {
         mockMvc.perform(delete("/users/99"))
                 .andExpect(status().isNotFound());
     }
+
 }

@@ -2,7 +2,6 @@ package ru.practicum.shareit.request;
 
 import org.junit.jupiter.api.Test;
 import ru.practicum.shareit.item.ItemShortResponseDTO;
-import ru.practicum.shareit.mapper.ItemRequestMapper;
 import ru.practicum.shareit.user.User;
 
 import java.time.LocalDateTime;
