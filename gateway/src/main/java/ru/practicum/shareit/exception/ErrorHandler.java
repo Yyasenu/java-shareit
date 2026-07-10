@@ -1,6 +1,5 @@
 package ru.practicum.shareit.exception;
 
-import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.slf4j.Logger;
@@ -16,12 +15,12 @@ public class ErrorHandler {
 
     private static final Logger log = LoggerFactory.getLogger(ErrorHandler.class);
 
-    @ExceptionHandler(ConstraintViolationException.class)
+    /* @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleValidationException(ConstraintViolationException e) {
         log.info("400 {}", e.getMessage(), e);
         return new ErrorResponse(e.getMessage());
-    }
+    } */
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -29,10 +28,10 @@ public class ErrorHandler {
         log.info("400 {}", e.getMessage(), e);
         return new ErrorResponse(e.getMessage());
     }
-}
 
-@Data
-@AllArgsConstructor
-class ErrorResponse {
-    private String error;
+    @Data
+    @AllArgsConstructor
+    class ErrorResponse {
+        private String error;
+    }
 }
