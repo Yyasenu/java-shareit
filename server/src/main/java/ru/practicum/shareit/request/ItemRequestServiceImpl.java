@@ -73,5 +73,4 @@ public class ItemRequestServiceImpl implements ItemRequestService {
 
         return ItemRequestMapper.toItemRequestResponseDTO(request);
     }
-
 }
