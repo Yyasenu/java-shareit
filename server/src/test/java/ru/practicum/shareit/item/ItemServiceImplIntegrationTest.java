@@ -245,5 +245,5 @@ class ItemServiceImplIntegrationTest {
 
         assertThrows(ValidationException.class,
                 () -> itemService.addComment(nonBooker.getId(), item.getId(), "Не должен добавиться"));
-    } 
+    }
 }
